@@ -1,0 +1,44 @@
+---
+title: "p8105_hw2_th3147"
+author: "Te-Hsuan Huang"
+date: "2025-09-27"
+output: github_document
+---
+
+# Problem 1
+
+1. First dataset
+```{r}
+library(tidyverse)
+
+polsmonth_df = read_csv(file = "./fivethirtyeight_datasets/pols-month.csv") |> 
+  janitor::clean_names() |> 
+  separate(mon, into = c("year", "month", "day"), sep = "-") |> 
+ mutate( 
+    month = case_match(
+      month,
+      "01" ~ "Jan",
+      "02" ~ "Feb",
+      "03" ~ "Mar",
+      "04" ~ "Apr",
+      "05" ~ "May",
+      "06" ~ "Jun",
+      "07" ~ "Jul",
+      "08" ~ "Aug",
+      "09" ~ "Sep",
+      "10" ~ "Oct",
+      "11" ~ "Nov",
+      "12" ~ "Dec"
+    ), 
+    
+    president = case_match(
+      prez_dem,
+      1 ~ "dem",
+      0 ~ "gop")) |> 
+    select(-prez_dem, -prez_gop, -day)
+
+polsmonth_df
+  
+```
+
+
