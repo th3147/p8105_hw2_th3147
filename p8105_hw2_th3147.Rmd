@@ -133,3 +133,17 @@ mrtrash_df =
 mrtrash_df
 ```
 
+2. Second dataset
+
+```{r}
+prtrash_df = 
+  readxl::read_excel("./problem 2/202409 Trash Wheel Collection Data.xlsx"
+                     , sheet="Professor Trash Wheel"
+                     , range = "A2:M120") |> 
+  janitor::clean_names()
+
+prtrash_df
+```
+
+* Do I need to round any variable??
+
