@@ -8,6 +8,7 @@ output: github_document
 # Problem 1
 
 1. First dataset
+
 ```{r}
 library(tidyverse)
 
@@ -41,4 +42,35 @@ polsmonth_df
   
 ```
 
+2.second dataset
+
+```{r}
+snp_df = read_csv(file = "./fivethirtyeight_datasets/snp.csv") |> 
+  janitor::clean_names() |> 
+  separate(date, into = c("month", "day", "year"), sep = "/") |>
+  mutate(
+    year = as.integer(paste0("20", year)),
+    month = case_match(
+      month,
+      "1" ~ "Jan",
+      "2" ~ "Feb",
+      "3" ~ "Mar",
+      "4" ~ "Apr",
+      "5" ~ "May",
+      "6" ~ "Jun",
+      "7" ~ "Jul",
+      "8" ~ "Aug",
+      "9" ~ "Sep",
+      "10" ~ "Oct",
+      "11" ~ "Nov",
+      "12" ~ "Dec"
+    )) |> 
+      select(-day) |>
+      arrange (year, month) |> 
+      relocate(year, month)
+
+snp_df
+```
+
+* paste0: is a function in R used to concatenate (join together) character strings.
 
