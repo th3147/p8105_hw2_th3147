@@ -19,18 +19,18 @@ polsmonth_df = read_csv(file = "./fivethirtyeight_datasets/pols-month.csv") |>
    year = as.numeric(year),
     month = case_match(
       month,
-      "01" ~ "Jan",
-      "02" ~ "Feb",
-      "03" ~ "Mar",
-      "04" ~ "Apr",
-      "05" ~ "May",
-      "06" ~ "Jun",
-      "07" ~ "Jul",
-      "08" ~ "Aug",
-      "09" ~ "Sep",
-      "10" ~ "Oct",
-      "11" ~ "Nov",
-      "12" ~ "Dec"
+      "01" ~ "jan",
+      "02" ~ "feb",
+      "03" ~ "mar",
+      "04" ~ "apr",
+      "05" ~ "may",
+      "06" ~ "jun",
+      "07" ~ "jul",
+      "08" ~ "aug",
+      "09" ~ "sep",
+      "10" ~ "oct",
+      "11" ~ "nov",
+      "12" ~ "dec"
     ), 
     
     president = case_match(
@@ -43,6 +43,8 @@ polsmonth_df
   
 ```
 
+* make sure the lower case in month.
+
 2.second dataset
 
 ```{r}
@@ -54,18 +56,18 @@ snp_df = read_csv(file = "./fivethirtyeight_datasets/snp.csv") |>
     year = as.numeric(year),
     month = case_match(
       month,
-      "1" ~ "Jan",
-      "2" ~ "Feb",
-      "3" ~ "Mar",
-      "4" ~ "Apr",
-      "5" ~ "May",
-      "6" ~ "Jun",
-      "7" ~ "Jul",
-      "8" ~ "Aug",
-      "9" ~ "Sep",
-      "10" ~ "Oct",
-      "11" ~ "Nov",
-      "12" ~ "Dec"
+      "1" ~ "jan",
+      "2" ~ "feb",
+      "3" ~ "mar",
+      "4" ~ "apr",
+      "5" ~ "may",
+      "6" ~ "jun",
+      "7" ~ "jul",
+      "8" ~ "aug",
+      "9" ~ "sep",
+      "10" ~ "oct",
+      "11" ~ "nov",
+      "12" ~ "dec"
     )) |> 
       select(-day) |>
       arrange (year, month) |> 
@@ -75,6 +77,9 @@ snp_df
 ```
 
 * paste0: is a function in R used to concatenate (join together) character strings.
+
+* make sure the lower case in month.
+
 
 3. Third dataset
 
@@ -94,7 +99,7 @@ unemploy_df
 4. Join the dataset
 
 ```{r}
-final_merged_df <- 
+final_merged_df = 
   polsmonth_df |>
   left_join(snp_df, by = c("year", "month")) |>
   left_join(unemploy_df, by = c("year", "month"))
