@@ -74,3 +74,19 @@ snp_df
 
 * paste0: is a function in R used to concatenate (join together) character strings.
 
+3. Third dataset
+
+```{r}
+unemploy_df = read_csv(file = "./fivethirtyeight_datasets/unemployment.csv") |> 
+  janitor::clean_names() |> 
+  pivot_longer(
+    jan:dec,
+    names_to = "month", 
+    values_to = "unemployment_rate") |> 
+  relocate(year, month) |>
+  arrange(year, month)
+
+unemploy_df
+```
+
+
