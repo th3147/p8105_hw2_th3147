@@ -16,6 +16,7 @@ polsmonth_df = read_csv(file = "./fivethirtyeight_datasets/pols-month.csv") |>
   janitor::clean_names() |> 
   separate(mon, into = c("year", "month", "day"), sep = "-") |> 
  mutate( 
+   year = as.numeric(year),
     month = case_match(
       month,
       "01" ~ "Jan",
@@ -50,6 +51,7 @@ snp_df = read_csv(file = "./fivethirtyeight_datasets/snp.csv") |>
   separate(date, into = c("month", "day", "year"), sep = "/") |>
   mutate(
     year = as.integer(paste0("20", year)),
+    year = as.numeric(year),
     month = case_match(
       month,
       "1" ~ "Jan",
@@ -89,4 +91,15 @@ unemploy_df = read_csv(file = "./fivethirtyeight_datasets/unemployment.csv") |>
 unemploy_df
 ```
 
+4. Join the dataset
 
+```{r}
+final_merged_df <- 
+  polsmonth_df |>
+  left_join(snp_df, by = c("year", "month")) |>
+  left_join(unemploy_df, by = c("year", "month"))
+
+final_merged_df
+```
+
+* Keep in mind: the features of year and month in each dataset should be same.
