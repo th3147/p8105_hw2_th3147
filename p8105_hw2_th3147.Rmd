@@ -192,3 +192,59 @@ final_merged2_df
   filter(wheel_name == "Gwynnda Trash Wheel", year == 2022, month == "June") |>
   summarize(total_butts = sum(cigarette_butts, na.rm = TRUE)) |>
   pull(total_butts), big.mark = ",", scientific = FALSE)` butts.
+  
+# Problem 3
+
+1. First dataset
+
+```{r}
+zipcode_df = read_csv(file = "./zillow_data/Zip Codes.csv") |> 
+  janitor::clean_names() |> 
+  rename(county_name = county) |> 
+  select(-county_fips) |> 
+  relocate(zip_code, county_name) |> 
+  arrange(zip_code)
+
+zipcode_df
+```
+
+2. Second dataset
+
+```{r}
+rental_df = read_csv(file = "./zillow_data/Zip_zori_uc_sfrcondomfr_sm_month_NYC.csv") |> 
+  janitor::clean_names() |> 
+  pivot_longer(
+    x2015_01_31:x2024_08_31,
+    names_to = "rental_date", 
+    values_to = "rental_price") |> 
+  mutate(
+    county_name = stringr::str_replace(county_name, " County", ""),
+    rental_date = stringr::str_replace(rental_date, "x", "")
+  ) |> 
+  separate(rental_date, into = c("year", "month", "day"), sep = "_") |> 
+  mutate(
+    month = case_match(
+      month,
+      "01" ~ "jan",
+      "02" ~ "feb",
+      "03" ~ "mar",
+      "04" ~ "apr",
+      "05" ~ "may",
+      "06" ~ "jun",
+      "07" ~ "jul",
+      "08" ~ "aug",
+      "09" ~ "sep",
+      "10" ~ "oct",
+      "11" ~ "nov",
+      "12" ~ "dec"
+    ),
+    year=as.integer(year),
+    day=as.integer(day)) |> 
+  rename(zip_code = region_name) |> 
+  relocate(zip_code, county_name) |> 
+  select(-state, -region_type) |> 
+  arrange(zip_code)
+
+rental_df
+```
+
