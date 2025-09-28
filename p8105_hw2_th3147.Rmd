@@ -128,9 +128,11 @@ mrtrash_df =
   janitor::clean_names() |> 
    mutate(
     sports_balls = as.integer(round(as.numeric(`sports_balls`))),
-    wheel_name = "Mr. Trash Wheel"
+    wheel_name = "Mr. Trash Wheel",
+    year=as.numeric(year)
   ) |> 
-  select(-dumpster)
+  select(-dumpster) |> 
+  relocate(year, month, wheel_name)
 
 mrtrash_df
 ```
@@ -145,7 +147,8 @@ prtrash_df =
   janitor::clean_names() |> 
   mutate(
     wheel_name = "Professor Trash Wheel") |> 
-  select(-dumpster)
+  select(-dumpster) |> 
+  relocate(year, month, wheel_name)
 
 prtrash_df
 ```
@@ -162,7 +165,8 @@ gwtrash_df =
   janitor::clean_names() |> 
   mutate(
     wheel_name = "Gwynnda Trash Wheel") |> 
-  select(-dumpster)
+  select(-dumpster) |> 
+  relocate(year, month, wheel_name)
   
 gwtrash_df
 ```
