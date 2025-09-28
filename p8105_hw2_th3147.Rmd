@@ -258,3 +258,8 @@ final_merged3_df =
 final_merged3_df
 ```
 
+* The resulting dataset is a tidy, time-series data frame containing rental price metrics across various geographic levels. It appears to combine Zillow rental data (indicated by columns like zip_code, region_id, and rental_price) with geographic identifiers like county_name and state_name. Each row represents a rental price observation for a specific ZIP code and month. This dataset includes a total of `r nrow(final_merged3_df)` observations. Within these records, the data covers `r data.table::uniqueN(final_merged3_df$zip_code)` unique ZIP codes and `r final_merged3_df |>
+  filter(!is.na(neighborhood)) |>
+  # 2. Pull the clean column as a vector
+  pull(neighborhood) |>
+  data.table::uniqueN()` unique neighborhoods.
