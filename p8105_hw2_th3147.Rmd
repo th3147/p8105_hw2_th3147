@@ -100,7 +100,7 @@ unemploy_df
 
 ```{r}
 final_merged_df = 
-  polsmonth_df |>
+   polsmonth_df |>
   left_join(snp_df, by = c("year", "month")) |>
   left_join(unemploy_df, by = c("year", "month"))
 
@@ -132,7 +132,8 @@ mrtrash_df =
     year=as.numeric(year)
   ) |> 
   select(-dumpster) |> 
-  relocate(year, month, wheel_name)
+  relocate(year, month, wheel_name) |> 
+  arrange(date)
 
 mrtrash_df
 ```
@@ -148,12 +149,11 @@ prtrash_df =
   mutate(
     wheel_name = "Professor Trash Wheel") |> 
   select(-dumpster) |> 
-  relocate(year, month, wheel_name)
+  relocate(year, month, wheel_name) |> 
+  arrange(date)
 
 prtrash_df
 ```
-
-* Do I need to round any variable??
 
 3. Third dataset
 
@@ -166,9 +166,19 @@ gwtrash_df =
   mutate(
     wheel_name = "Gwynnda Trash Wheel") |> 
   select(-dumpster) |> 
-  relocate(year, month, wheel_name)
+  relocate(year, month, wheel_name) |> 
+  arrange(date)
   
 gwtrash_df
 ```
 
-* Do I need to round any variable??
+4. Merge the dataset
+
+```{r}
+final_merged2_df = 
+  bind_rows(mrtrash_df, prtrash_df, gwtrash_df) |>
+  janitor::clean_names()
+
+final_merged2_df
+```
+
