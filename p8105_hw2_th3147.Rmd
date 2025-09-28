@@ -263,3 +263,9 @@ final_merged3_df
   # 2. Pull the clean column as a vector
   pull(neighborhood) |>
   data.table::uniqueN()` unique neighborhoods.
+
+* `r final_merged3_df |>
+  filter(is.na(size_rank))|>
+  # 2. Pull the clean column as a vector
+  pull(zip_code) |>
+  data.table::uniqueN()` ZIP codes appear in the ZIP code dataset but not in the Zillow Rental Price dataset
