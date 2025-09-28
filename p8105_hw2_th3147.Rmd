@@ -127,8 +127,10 @@ mrtrash_df =
                      , range = "A2:N653") |> 
   janitor::clean_names() |> 
    mutate(
-    sports_balls = as.integer(round(as.numeric(`sports_balls`))) 
-  )
+    sports_balls = as.integer(round(as.numeric(`sports_balls`))),
+    wheel_name = "Mr. Trash Wheel"
+  ) |> 
+  select(-dumpster)
 
 mrtrash_df
 ```
@@ -140,10 +142,29 @@ prtrash_df =
   readxl::read_excel("./problem 2/202409 Trash Wheel Collection Data.xlsx"
                      , sheet="Professor Trash Wheel"
                      , range = "A2:M120") |> 
-  janitor::clean_names()
+  janitor::clean_names() |> 
+  mutate(
+    wheel_name = "Professor Trash Wheel") |> 
+  select(-dumpster)
 
 prtrash_df
 ```
 
 * Do I need to round any variable??
 
+3. Third dataset
+
+```{r}
+gwtrash_df = 
+  readxl::read_excel("./problem 2/202409 Trash Wheel Collection Data.xlsx"
+                     , sheet="Gwynnda Trash Wheel"
+                     , range = "A2:L265") |> 
+  janitor::clean_names() |> 
+  mutate(
+    wheel_name = "Gwynnda Trash Wheel") |> 
+  select(-dumpster)
+  
+gwtrash_df
+```
+
+* Do I need to round any variable??
