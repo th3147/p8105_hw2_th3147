@@ -96,7 +96,7 @@ unemploy_df = read_csv(file = "./fivethirtyeight_datasets/unemployment.csv") |>
 unemploy_df
 ```
 
-4. Join the dataset
+4. Merge the dataset
 
 ```{r}
 final_merged_df = 
@@ -172,7 +172,7 @@ gwtrash_df =
 gwtrash_df
 ```
 
-4. Merge the dataset
+4. Combine the dataset
 
 ```{r}
 final_merged2_df = 
@@ -246,5 +246,15 @@ rental_df = read_csv(file = "./zillow_data/Zip_zori_uc_sfrcondomfr_sm_month_NYC.
   arrange(zip_code)
 
 rental_df
+```
+
+3. Merge the data
+
+```{r}
+final_merged3_df = 
+  zipcode_df |>
+  left_join(rental_df, by = c("zip_code", "county_name"))
+
+final_merged3_df
 ```
 
