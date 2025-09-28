@@ -113,7 +113,7 @@ final_merged_df
 
 2. the alphabet should be exactly same in month.
 
-* The resulting dataset is a time-series data frame created by merging three original sources: pols-month.csv, which contains U.S. political control data (including the number of Democratic and Republican governors and the party of the sitting President); snp.csv, which tracks the S&P 500 closing price; and unemployment.csv, which records the national unemployment rate. After joining the three files on the common keys of year and month, the final merged dataset contains 822 rows and 11 columns, covering the time span from 1947 to 2015. Key variables include the date identifiers (year, month), political metrics (gov_gop, rep_dem, president), the financial index (close), and the economic indicator (unemployment_rate).
+* The resulting dataset is a time-series data frame created by merging three original sources: pols-month.csv, which contains U.S. political control data (including the number of Democratic and Republican governors and the party of the sitting President); snp.csv, which tracks the S&P 500 closing price; and unemployment.csv, which records the national unemployment rate. After joining the three files on the common keys of year and month, the final merged dataset contains `r nrow(final_merged_df)` rows and `r ncol(final_merged_df)` columns, covering the time span from 1947 to 2015. Key variables include the date identifiers (year, month), political metrics (gov_gop, rep_dem, president), the financial index (close), and the economic indicator (unemployment_rate).
 
 
 # Problem 2
@@ -182,3 +182,13 @@ final_merged2_df =
 final_merged2_df
 ```
 
+* The combined Trash Wheel dataset is a time-series data frame that aggregates collection metrics for three different wheels: Mr. Trash Wheel, Professor Trash Wheel, and Gwynnda. This dataset contains `r nrow(final_merged2_df)` observations, with key variables including the wheel identifier, the date, the amount of trash collected by weight, and specific item counts like plastic_bottles and cigarette_butts. Analysis of the individual wheels shows that the total weight of trash collected by Professor Trash Wheel amounts to `r 
+  final_merged2_df |> 
+  filter(wheel_name == "Professor Trash Wheel") |> 
+  summarize(total_weight = sum(weight_tons, na.rm = TRUE)) |> 
+  pull(total_weight) 
+` tons. Furthermore, the total number of cigarette butts collected by Gwynnda in June of 2022 was `r 
+  format (final_merged2_df |> 
+  filter(wheel_name == "Gwynnda Trash Wheel", year == 2022, month == "June") |>
+  summarize(total_butts = sum(cigarette_butts, na.rm = TRUE)) |>
+  pull(total_butts), big.mark = ",", scientific = FALSE)` butts.
