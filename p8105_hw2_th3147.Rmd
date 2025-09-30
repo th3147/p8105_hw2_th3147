@@ -127,7 +127,7 @@ final_merged_df
 mrtrash_df = 
   readxl::read_excel("./problem 2/202509 Trash Wheel Collection Data.xlsx"
                      , sheet="Mr. Trash Wheel"
-                     , range = "A2:N653") |> 
+                     , range = "A2:N709") |> 
   janitor::clean_names() |> 
    mutate(
     sports_balls = as.integer(round(as.numeric(`sports_balls`))),
@@ -147,7 +147,7 @@ mrtrash_df
 prtrash_df = 
   readxl::read_excel("./problem 2/202509 Trash Wheel Collection Data.xlsx"
                      , sheet="Professor Trash Wheel"
-                     , range = "A2:M120") |> 
+                     , range = "A2:M134") |> 
   janitor::clean_names() |> 
   mutate(
     wheel_name = "Professor Trash Wheel") |> 
@@ -164,7 +164,7 @@ prtrash_df
 gwtrash_df = 
   readxl::read_excel("./problem 2/202509 Trash Wheel Collection Data.xlsx"
                      , sheet="Gwynns Falls Trash Wheel"
-                     , range = "A2:L265") |> 
+                     , range = "A2:L351") |> 
   janitor::clean_names() |> 
   mutate(
     wheel_name = "Gwynns Falls Trash Wheel") |> 
@@ -217,7 +217,7 @@ zipcode_df
 rental_df = read_csv(file = "./zillow_data/Zip_zori_uc_sfrcondomfr_sm_month_NYC.csv") |> 
   janitor::clean_names() |> 
   pivot_longer(
-    x2015_01_31:x2024_08_31,
+    x2015_1_31:x2024_8_31,
     names_to = "rental_date", 
     values_to = "rental_price") |> 
   mutate(
@@ -253,11 +253,7 @@ final_merged3_df
   pull(neighborhood) |>
   data.table::uniqueN()` unique neighborhoods.
 
-* `r final_merged3_df |>
-  filter(is.na(size_rank))|>
-  # 2. Pull the clean column as a vector
-  pull(zip_code) |>
-  data.table::uniqueN()` ZIP codes appear in the ZIP code dataset but not in the Zillow Rental Price dataset. The reason is that many large office towers or institutions in major cities have their own dedicated ZIP codes. These areas have no street-level residential rentals for Zillow to track.
+* `r anti_join(zipcode_df, rental_df, by = "zip_code") |> nrow()` ZIP codes appear in the ZIP code dataset but not in the Zillow Rental Price dataset. The reason is that many large office towers or institutions in major cities have their own dedicated ZIP codes. These areas have no street-level residential rentals for Zillow to track.
 
 4. Make a table
 
@@ -304,10 +300,8 @@ mutate(
   )
 ```
 
-5. Compare each month
-
+5. Compare Jan
 ```{r message = FALSE}
-# 1.
 top_drop_Jan <-
 top_drop_zips |> 
   arrange(price_drop_Jan) |> 
@@ -320,6 +314,14 @@ top_drop_zips |>
   head(10)
 
 top_drop_Jan
+```
+* The list of the top 10 ZIP codes with the largest rental price drops between January 2020 and January 2021 is entirely comprised of areas within Manhattan (New York Borough), specifically neighborhoods in the Downtown and Midtown areas.
+
+  * Magnitude of the Drop: The largest decrease was found in ZIP code 10007 (Lower Manhattan), with a staggering average drop of over 912 dollars per month. All top 10 ZIP codes saw average monthly rental price decreases of at least 684 dollars.
+
+6. Options: Compare each month
+
+```{r message = FALSE}
 
 #2.
 top_drop_Feb <-
