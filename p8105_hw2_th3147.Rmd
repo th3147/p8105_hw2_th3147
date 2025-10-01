@@ -255,7 +255,7 @@ final_merged3_df
   pull(neighborhood) |>
   data.table::uniqueN()` unique neighborhoods.
 
-* `r anti_join(zipcode_df, rental_df, by = "zip_code") |> nrow()` ZIP codes appear in the ZIP code dataset but not in the Zillow Rental Price dataset. The reason is that many large office towers or institutions in major cities have their own dedicated ZIP codes. These areas have no street-level residential rentals for Zillow to track.
+* `r anti_join(zipcode_df, rental_df, by = "zip_code") |> nrow()` ZIP codes appear in the ZIP code dataset but not in the Zillow Rental Price dataset. The reason is that many large office towers (10118: Empire State Building) or institutions in major cities have their own dedicated ZIP codes. These areas have no street-level residential rentals for Zillow to track.
 
 4. Make a table
 
