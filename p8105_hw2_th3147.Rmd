@@ -201,7 +201,8 @@ final_merged2_df
 1. First dataset
 
 ```{r message = FALSE}
-zipcode_df = read_csv(file = "./zillow_data/Zip Codes.csv") |> 
+zipcode_df = read_csv(file = "./zillow_data/Zip Codes.csv",,
+        na = c(".", "NA", "")) |> 
   janitor::clean_names() |> 
   rename(county_name = county) |> 
   select(-county_fips) |> 
@@ -214,7 +215,8 @@ zipcode_df
 2. Second dataset
 
 ```{r message = FALSE}
-rental_df = read_csv(file = "./zillow_data/Zip_zori_uc_sfrcondomfr_sm_month_NYC.csv") |> 
+rental_df = read_csv(file = "./zillow_data/Zip_zori_uc_sfrcondomfr_sm_month_NYC.csv",,
+        na = c(".", "NA", "")) |> 
   janitor::clean_names() |> 
   pivot_longer(
     x2015_1_31:x2024_8_31,
@@ -241,8 +243,8 @@ rental_df
 
 ```{r message = FALSE}
 final_merged3_df = 
-  zipcode_df |>
-  left_join(rental_df, by = c("zip_code", "county_name"))
+  rental_df |>
+  left_join(zipcode_df, by = c("zip_code", "county_name"))
 
 final_merged3_df
 ```
